@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecwon Premium Reviews</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+:root {
+  --blue: #007bff;
+  --star: #ffcc00;
+}
+
+body {
+  font-family: Arial, sans-serif; /* Added sans-serif as fallback */
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+/* Page Edge / Vertical Boundary with full screen fit */
+.page-boundary {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1250px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  min-height: 100vh;
+  /* Fill viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-wrapper {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 10px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-main {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.title-sub {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.overall-rating-box {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stars-gold {
+  color: var(--star);
+  letter-spacing: 2px;
+}
+
+.blue-bar-btn {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+/* Updated: Styling for the link button to be a narrower, centered block */
+.blue-bar-link {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  /* --- Key changes for centering a narrower button --- */
+  max-width: 250px;
+  /* Set a maximum width for the button (adjust as needed) */
+  display: block;
+  /* Important for margin: auto to work horizontally */
+  margin: 15px auto 25px auto;
+  /* Centers the block horizontally, keeps vertical spacing */
+  /* ---------------------------------------------------- */
+  text-align: center;
+  /* Centers the text inside the button */
+  text-decoration: none;
+  /* Remove default underline from link */
+  cursor: pointer;
+}
+
+/* New: Styling for the sort dropdown */
+.sort-options {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.sort-options label {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.sort-options select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Carousel */
+.swiper {
+  width: 100%;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.swiper-slide {
+  width: 280px !important;
+}
+
+/* Card */
+.review-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: .25s;
+  /* Transition for potential other effects */
+}
+
+/* Removed hover scale effect */
+/* .review-card:hover { transform:scale(1.03); } */
+
+.user-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.verified {
+  color: var(--blue);
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: #888;
+  margin-left: auto;
+}
+
+.card-stars {
+  color: var(--star);
+  margin: 6px 0;
+}
+
+.review-msg {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.4;
+}
+
+.read-more {
+  color: var(--blue);
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.review-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: .2s;
+  /* Transition for potential other effects */
+}
+
+/* Removed hover scale effect */
+/* .review-image:hover { transform:scale(1.05); } */
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--blue);
+}
+
+/* Zoom Modal */
+#zoomModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .9);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.zoom-content {
+  position: relative;
+  /* Essential for absolute positioning of child elements */
+  background: white;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  /* Add padding-top to make space for the close button if content can go up that high */
+  padding-top: 35px;
+  /* Adjust as needed based on close button size and desired spacing */
+  box-sizing: border-box;
+}
+
+.zoom-close-btn {
+  position: absolute;
+  top: 8px;
+  /* Adjusted slightly for better placement within the padding */
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  /* Slightly softer color than black for subtlety */
+  cursor: pointer;
+  z-index: 10000;
+  background: none;
+  /* Ensure no background interferes */
+  border: none;
+  /* Remove any default button styling */
+  line-height: 1;
+  /* Align 'x' nicely */
+  padding: 0;
+  /* Remove default button padding */
+}
+
+.zoom-close-btn:hover {
+  color: #000;
+  /* Darker on hover */
+}
+
+.zoom-content img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Form modal */
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .6);
+  overflow: auto;
+}
+
+.modal-content {
+  background: white;
+  max-width: 420px;
+  width: 95%;
+  margin: 60px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.post-btn {
+  background: var(--blue);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Updated: Styling for the Confirmation Dialog */
+.confirmation-dialog {
+  display: none;
+  position: fixed;
+  /* Updated Positioning */
+  top: 20%;
+  /* Position 20% from the top of the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Only translate horizontally for centering */
+  /* -------------------------- */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  /* Ensure it's on top of everything */
+  text-align: center;
+  max-width: 350px;
+  /* Added max-width to ensure it doesn't get too wide on large screens */
+  width: 90%;
+  /* Responsive width */
+}
+
+.confirmation-dialog p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #444;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  /* Added gap for spacing between buttons */
+}
+
+.confirmation-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  flex-grow: 1;
+  /* Make buttons grow to fill space */
+}
+
+.confirmation-buttons button.keep-writing {
+  background-color: #eee;
+  color: #333;
+}
+
+.confirmation-buttons button.discard-review {
+  background-color: #f44336;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-boundary">
+  <div class="widget-wrapper">
+
+    <div class="title-main">
+    What our customers say | Apa yang pelanggan kami katakan | 客户评价
+    </div>
+
+    <div class="title-sub">
+    Latest Wins & Reviews | Kemenangan & Ulasan Terkini | 最新中奖与评价
+    </div>
+
+    <div class="overall-rating-box">
+      <div id="all-reviews-text">All Reviews 0.0</div>
+      <div class="rating-row">
+        <span id="avg-num">0.0</span>
+        <span class="stars-gold" id="avg-stars">☆☆☆☆☆</span>
+        <span id="total-count">(0)</span>
+      </div>
+    </div>
+
+    <button class="blue-bar-btn" onclick="openModal()">
+      Write a Review | Tulis Ulasan | 发表评价
+    </button>
+
+    <!-- NEW BUTTON LINK -->
+    <a href="https://ecwoncasino.com/en/registration/188159" target="_blank" class="blue-bar-link">
+      Register Now | Daftar Sekarang | 立即注册
+    </a>
+    <!-- END NEW BUTTON LINK -->
+
+    <!-- NEW SORTING OPTIONS -->
+    <div class="sort-options">
+      <label for="review-sort">Sort by:</label>
+      <select id="review-sort" onchange="handleSortChange()">
+        <option value="recent">Most Recent</option>
+        <option value="highest_rated">Highest Rated</option>
+      </select>
+    </div>
+    <!-- END SORTING OPTIONS -->
+
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="review-list"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>
+</div> <!-- END page-boundary -->
+
+<!-- ZOOM CONTENT -->
+<div id="zoomModal">
+  <div class="zoom-content" id="zoomContent">
+    <button class="zoom-close-btn" onclick="closeZoom()">✖</button>
+    <!-- Content will be inserted here by JavaScript -->
+  </div>
+</div>
+
+<!-- FORM -->
+<div id="modal">
+  <div class="modal-content">
+    <h3>Submit Review | Hantar Ulasan | 提交评价</h3>
+    <div id="star-selector" style="font-size:25px;color:#ddd;cursor:pointer">
+      <span onclick="setRate(1)">★</span>
+      <span onclick="setRate(2)">★</span>
+      <span onclick="setRate(3)">★</span>
+      <span onclick="setRate(4)">★</span>
+      <span onclick="setRate(5)">★</span>
+    </div>
+    <input id="name" class="form-input" placeholder="Name | Nama | 名字" required>
+    <div id="name-error" class="error-message"></div>
+    <input id="country" class="form-input" placeholder="Country | Negara | 国家" required>
+    <div id="country-error" class="error-message"></div>
+    <textarea id="msg" class="form-input" rows="3" placeholder="Review | Ulasan | 评价" required></textarea>
+    <div id="msg-error" class="error-message"></div>
+    <input type="file" id="pic" class="form-input" accept="image/*">
+    <button class="post-btn" id="submitBtn" onclick="submitReview()">
+      Post Review | Hantar | 发送
+    </button>
+    <p style="text-align:center;cursor:pointer;color:#777" onclick="checkBeforeCloseModal()">
+      Cancel | Batal | 取消
+    </p>
+  </div>
+</div>
+
+<!-- Confirmation Dialog -->
+<div id="confirmationDialog" class="confirmation-dialog">
+    <p>Discard your review? | Buang ulasan anda? | 放弃评论？</p>
+    <p>You've started writing a review. If you close this window, your text will be lost. | Anda telah mulai menulis ulasan. Jika Anda menutup jendela ini, teks Anda akan hilang. | 您已开始撰写评论。 如果您关闭此窗口，您的文字将会丢失。</p>
+    <div class="confirmation-buttons">
+        <button class="keep-writing" onclick="closeConfirmationDialog()">Keep Writing | Terus Menulis | 继续写作</button>
+        <button class="discard-review" onclick="discardReviewAndCloseModal()">Discard Review | Buang Ulasan | 放弃评论</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyYND56vybQbVOhUi21zqr1p_9Kg8nYoumfokY1XWRloAKXMZ6_2_Oo2eTSL3DFnrS9lA/exec";
+
+let selectedRating=5;
+let swiperInstance=null;
+let allReviewsData = []; // Variable to store all fetched review data
+let reviewTextEntered = false;  // Track if any review text has been entered
+let debounceTimeout; // Store the timeout ID for debouncing
+
+function openModal(){
+  document.getElementById("modal").style.display="block";
+  reviewTextEntered = false;  // Reset on open
+  // Add input event listeners to track changes
+  document.getElementById("name").addEventListener("input", debouncedCheckReviewTextEntered);
+  document.getElementById("country").addEventListener("input", debouncedCheckReviewTextEntered);
+  document.getElementById("msg").addEventListener("input", debouncedCheckReviewTextEntered);
+}
+
+function closeModal(){ document.getElementById("modal").style.display="none"; }
+
+function setRate(r){
+selectedRating=r;
+document.querySelectorAll("#star-selector span").forEach((s,i)=>{
+s.style.color=i<r?"#ffcc00":"#ddd";
+});
+}
+
+/* ZOOM */
+function zoomReview(name,country,review,img){
+let altText = review ? review.slice(0,50) : `Review image by ${name}`;
+// When setting innerHTML, we need to preserve the close button
+let existingHtml = `<button class="zoom-close-btn" onclick="closeZoom()">✖</button>`; // Keep the close button
+let newContentHtml=`<h3>${name} <span class="verified">✔</span></h3>
+<p><b>${country}</b></p>
+<p>${review}</p>`;
+if(img){
+newContentHtml+=`<img src="${img}" alt="${altText}">`;
+}
+document.getElementById("zoomContent").innerHTML=existingHtml + newContentHtml;
+document.getElementById("zoomModal").style.display="flex";
+}
+
+function closeZoom() {
+  document.getElementById("zoomModal").style.display = "none";
+}
+
+/* READ MORE */
+function createReadMore(text){
+const maxLength = 100;
+if(text.length <= maxLength) return `<span>${text}</span>`;
+const shortText = text.slice(0,maxLength);
+const fullText = text;
+return `<span class="short-text">${shortText}</span><span class="dots">...</span>
+<span class="full-text" style="display:none;">${fullText}</span>
+<a class="read-more" onclick="toggleReadMore(this)">Read more</a>`;
+}
+
+function toggleReadMore(el){
+const parent = el.parentElement;
+const shortText = parent.querySelector('.short-text');
+const dots = parent.querySelector('.dots');
+const fullText = parent.querySelector('.full-text');
+shortText.style.display="none";
+dots.style.display="none";
+fullText.style.display="inline";
+el.style.display="none";
+// --- NEW: Update Swiper's height after content change ---
+if (swiperInstance) {
+    // A small delay might be needed sometimes for proper reflow
+    setTimeout(() => {
+        swiperInstance.updateAutoHeight();
+    }, 50); // 50ms delay
+}
+// --------------------------------------------------------
+}
+
+/* RENDER REVIEWS */
+function renderReviews(reviewsToRender) {
+    const container = document.getElementById("review-list");
+    container.innerHTML = ""; // Clear previous content
+
+    reviewsToRender.forEach(item => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
+
+        const card = document.createElement("div");
+        card.className = "review-card";
+
+        // Card inner HTML except image
+        card.innerHTML = `
+            <div class="user-header">
+                <div class="user-icon">👤</div>
+                <div>
+                    <span class="user-name">${item.Name} <span class="verified">✔</span></span>
+                    <span class="timestamp">${item.Timestamp || ""}</span><br>
+                    <span style="font-size:11px;color:#999">${item.Country}</span>
+                </div>
+            </div>
+            <div class="card-stars">${"★".repeat(item.Rating > 0 ? item.Rating : 0)}${"☆".repeat(5 - (item.Rating > 0 ? item.Rating : 0))}</div>
+            <div class="review-msg">${createReadMore(item.Review)}</div>
+        `;
+
+        // Append image safely
+        if (item.Image) {
+            const img = document.createElement("img");
+            img.src = item.Image;
+            img.alt = item.Review ? item.Review.slice(0, 50) : `Review image by ${item.Name}`;
+            img.className = "review-image";
+            img.addEventListener("click", () => {
+                zoomReview(item.Name, item.Country, item.Review, item.Image);
+            });
+            card.appendChild(img);
+        }
+
+        slide.appendChild(card);
+        container.appendChild(slide);
+    });
+
+    if (swiperInstance) swiperInstance.destroy(true, true);
+    swiperInstance = new Swiper(".mySwiper", {
+        slidesPerView: "auto",
+        spaceBetween: 16,
+        grabCursor: true,
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        autoHeight: true // Enable auto height for Swiper
+    });
+}
+
+
+/* LOAD REVIEWS */
+async function loadReviews(){
+    try {
+        const res = await fetch(SCRIPT_URL);
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        allReviewsData = data; // Store all data
+
+        // Default sort: Most Recent
+        handleSortChange();
+
+        // Update overall ratings
+        const total = data.length;
+        const avg = total ? (data.reduce((s,i)=>s+Number(i.Rating||0),0)/total).toFixed(1) : "0.0";
+
+        document.getElementById("avg-num").innerText = avg;
+        document.getElementById("total-count").innerText = "(" + total + ")";
+        document.getElementById("all-reviews-text").innerText = "All Reviews " + avg;
+        document.getElementById("avg-stars").innerText = "★".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
+
+    } catch (error) {
+        console.error("Error loading reviews:", error);
+        document.getElementById("review-list").innerHTML = "<p style='text-align:center; color:red;'>Failed to load reviews. Please try again later.</p>";
+        // Optionally update overall ratings to show error state
+        document.getElementById("avg-num").innerText = "N/A";
+        document.getElementById("total-count").innerText = "(Error)";
+        document.getElementById("all-reviews-text").innerText = "Failed to load";
+        document.getElementById("avg-stars").innerText = "☆☆☆☆☆";
+    }
+}
+
+/* SORTING LOGIC */
+function handleSortChange() {
+    const selectedSort = document.getElementById("review-sort").value;
+    let sortedReviews = [...allReviewsData]; // Create a copy to avoid modifying original data
+
+    if (selectedSort === "highest_rated") {
+        sortedReviews.sort((a, b) => (b.Rating || 0) - (a.Rating || 0)); // Sort by rating descending
+    } else { // Default to 'recent'
+        // Assuming Timestamp is in a sortable format (like ISO string or Unix timestamp)
+        // If Timestamp is complex, you might need a date parsing library or more robust sorting
+        sortedReviews.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp)); // Sort by timestamp descending
+    }
+    renderReviews(sortedReviews);
+}
+
+
+/* SUBMIT */
+async function submitReview() {
+  const name = document.getElementById("name").value.trim();
+  const country = document.getElementById("country").value.trim();
+  const msg = document.getElementById("msg").value.trim();
+
+  // Clear any previous error messages
+  document.getElementById("name-error").innerText = "";
+  document.getElementById("country-error").innerText = "";
+  document.getElementById("msg-error").innerText = "";
+
+  let hasErrors = false;
+
+  // Validate Name field
+  if (name === "") {
+    document.getElementById("name-error").innerText = "Name is required";
+    hasErrors = true;
+  }
+
+  // Validate Country field
+  if (country === "") {
+    document.getElementById("country-error").innerText = "Country is required";
+    hasErrors = true;
+  }
+
+  // Validate Message field (Review) - CORRECTED
+  if (msg === "") {
+    document.getElementById("msg-error").innerText = "Review is required"; // Corrected this line
+    hasErrors = true;
+  }
+
+  if (hasErrors) {
+    return; // Stop submission if there are errors
+  }
+
+  const btn = document.getElementById("submitBtn");
+  btn.innerText = "Posting...";
+  btn.disabled = true;
+
+  let base64 = "";
+  const file = document.getElementById("pic").files[0];
+  if (file) {
+    base64 = await new Promise(r => {
+      const rd = new FileReader();
+      rd.onload = () => r(rd.result);
+      rd.readAsDataURL(file);
+    });
+  }
+
+  const payload = {
+    name: name,
+    country: country,
+    review: msg,
+    rating: selectedRating,
+    image: base64
+  };
+
+  try {
+    await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    alert("Review Sent!");
+    closeModal(); // Close the modal after successful submission
+
+    // Re-render based on current sort preference (will get new data from loadReviews in finally block)
+    // handleSortChange(); // No longer needed here, as loadReviews() will call it.
+
+    // OPTIONAL: Clear the form fields
+    document.getElementById("name").value = "";
+    document.getElementById("country").value = "";
+    document.getElementById("msg").value = "";
+    document.getElementById("pic").value = ""; // Reset file input
+    setRate(5); // Reset rating
+  } catch (error) {
+    console.error("Error submitting review:", error);
+    alert("An error occurred while submitting the review. Please try again.");
+  } finally {
+    btn.innerText = "Post Review | Hantar | 发送";
+    btn.disabled = false;
+    loadReviews(); // Auto-update the reviews after submission attempt (success or fail)
+  }
+}
+
+// Add event listener for closing zoom modal
+document.getElementById('zoomModal').addEventListener('click', function(event) {
+  if (event.target === this) {
+    closeZoom();
+  }
+});
+
+//--- NEW --
+function checkBeforeCloseModal() {
+    if (reviewTextEntered) {
+        document.getElementById('confirmationDialog').style.display = 'block';
+    } else {
+        closeModal();
+    }
+}
+
+function closeConfirmationDialog() {
+    document.getElementById('confirmationDialog').style.display = 'none';
+}
+
+function discardReviewAndCloseModal() {
+  // Clear the form fields
+  document.getElementById("name").value = "";
+  document.getElementById("country").value = "";
+  document.getElementById("msg").value = "";
+  document.getElementById("pic").value = ""; // Reset file input
+  setRate(5); // Reset rating
+  document.getElementById('confirmationDialog').style.display = 'none';
+  closeModal();  // Actually close the modal
+}
+
+// Debounce function to limit the rate at which a function can fire.
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), delay);
+  }
+}
+
+// Function to check if any review text has been entered in any of the form fields
+function checkReviewTextEntered() {
+    const nameValue = document.getElementById("name").value.trim();
+    const countryValue = document.getElementById("country").value.trim();
+    const msgValue = document.getElementById("msg").value.trim();
+
+    reviewTextEntered = (nameValue !== '' || countryValue !== '' || msgValue !== '');
+}
+
+// Debounced version of the checkReviewTextEntered function with a delay of 300ms
+const debouncedCheckReviewTextEntered = debounce(checkReviewTextEntered, 300);
+
+// Add event listener for closing review submission modal
+document.getElementById('modal').addEventListener('click', function(event) {
+  if (event.target === this) {
+      checkBeforeCloseModal(); // Use the new function
+  }
+});
+
+// Initial load
+loadReviews();
+setRate(5);
+</script>
