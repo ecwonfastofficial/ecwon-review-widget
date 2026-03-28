@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="google-site-verification" content="jOoDMYb4MsYJJnUPQVzXvtt5jRSokOerZV97SjJ8cT8" />
-    
+    <script>
+  // 检查 Cloudflare 的地理位置信息
+  fetch('https://www.cloudflare.com/cdn-cgi/trace')
+    .then(res => res.text())
+    .then(data => {
+      // 如果数据中不包含 loc=MY 且不包含 loc=SG
+      if (!data.includes('loc=MY') && !data.includes('loc=SG')) {
+        // 非目标用户直接跳转到 google.com (你可以换成任何你想要的网址)
+        window.location.href = 'https://www.google.com';
+      }
+    })
+    .catch(err => console.error('Location check failed', err));
+</script>
+
     <title>Ecwon Premium Reviews - Play & Win Real Money! | Malaysia & Singapore</title>
     <meta name="description" content="Ecwon Premium Reviews - Trusted by 50,000+ players! Get 150% Welcome Bonus + 12% Cashback. Fast payouts, secure platform, huge jackpots daily! Join now in Malaysia and Singapore.">
     <meta name="geo.region" content="MY;SG" />
