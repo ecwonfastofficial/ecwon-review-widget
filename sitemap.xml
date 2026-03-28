@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Cloudflare Link -->
+  <url>
+    <loc>https://ecwon-review-widget.pages.dev/</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- GitHub Pages Link -->
   <url>
     <loc>https://ecwonfastofficial.github.io/ecwon-review-widget/</loc>
     <lastmod>2026-03-28</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>
