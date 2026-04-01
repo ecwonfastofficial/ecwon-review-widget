@@ -275,11 +275,13 @@
       padding: 20px;
       margin-bottom: 25px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
     .rating-row {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       font-size: 24px;
       font-weight: bold;
@@ -961,18 +963,19 @@
         margin-top: 35px;
         margin-bottom: 35px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
     }
     .premium-services-detailed-section h3 { font-size: 22px; font-weight: 700; text-align: center; color: #003366; margin-top: 0; margin-bottom: 25px; }
-    .premium-services-detailed-section .service-block { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+    .premium-services-detailed-section .service-block { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; text-align: center; }
     .premium-services-detailed-section .service-block h4 { font-size: 18px; font-weight: 800; color: var(--blue); margin-bottom: 15px; text-align: center; }
-    .premium-services-detailed-section .service-block h5 { font-size: 16px; font-weight: 700; color: var(--gold); margin-top: 20px; margin-bottom: 10px; text-align: left; }
-    .premium-services-detailed-section .service-block ul { list-style-type: none; padding: 0; margin-left: 20px; text-align: left; }
-    .premium-services-detailed-section .service-block li { margin-bottom: 5px; font-size: 14px; color: #444; }
+    .premium-services-detailed-section .service-block h5 { font-size: 16px; font-weight: 700; color: var(--gold); margin-top: 20px; margin-bottom: 10px; text-align: center; }
+    .premium-services-detailed-section .service-block ul { list-style-type: none; padding: 0; margin: 0 auto; text-align: center; display: inline-block; }
+    .premium-services-detailed-section .service-block li { margin-bottom: 5px; font-size: 14px; color: #444; text-align: left; }
     .premium-services-detailed-section .service-block p { font-size: 15px; font-weight: 700; color: #222; margin-top: 25px; text-align: center; }
-    .premium-services-detailed-section .reminder-block { padding-top: 10px; text-align: left; }
-    .premium-services-detailed-section .reminder-block h4 { font-size: 18px; font-weight: 700; color: #dc3545; margin-bottom: 15px; }
-    .premium-services-detailed-section .reminder-block ul { list-style-type: decimal; padding-left: 20px; margin: 0; }
-    .premium-services-detailed-section .reminder-block li { margin-bottom: 10px; font-size: 14px; color: #444; }
+    .premium-services-detailed-section .reminder-block { padding-top: 10px; text-align: center; }
+    .premium-services-detailed-section .reminder-block h4 { font-size: 18px; font-weight: 700; color: #dc3545; margin-bottom: 15px; text-align: center; }
+    .premium-services-detailed-section .reminder-block ul { list-style-type: decimal; padding-left: 20px; margin: 0 auto; display: inline-block; text-align: left; }
+    .premium-services-detailed-section .reminder-block li { margin-bottom: 10px; font-size: 14px; color: #444; text-align: left; }
 
     .payment-methods-section { text-align: center; margin-top: 30px; padding: 25px 15px; background-color: #f0f0f0; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
     .payment-methods-section h4 { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 20px; }
@@ -1015,6 +1018,8 @@
       .lang-dropdown { min-width: 260px; }
       .mySwiper .swiper-slide { width: 280px !important; }
       .zoom-content { max-width: 90vw; padding: 20px; padding-top: 45px; }
+      .premium-services-detailed-section .service-block ul { text-align: left; }
+      .premium-services-detailed-section .reminder-block ul { text-align: left; }
     }
     @media (max-width: 480px) {
         .title-main { font-size: 20px; }
@@ -1034,6 +1039,8 @@
         .mySwiper .swiper-slide { width: 260px !important; }
         .zoom-content { padding: 16px; padding-top: 40px; }
         .zoom-content h3 { font-size: 1.1em; }
+        .premium-services-detailed-section .service-block ul { text-align: left; }
+        .premium-services-detailed-section .reminder-block ul { text-align: left; }
     }
     </style>
 </head>
@@ -1153,7 +1160,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxaA22khqlHQpfsIBKQh
 const regUrls = {
   en: "https://ecwoncasino.com/en/registration/188159",
   ms: "https://ecwoncasino.com/en/registration/188159",
-  zh: "https://ecwoncasino.com/en/registration/188159"
+  zh: "https://ecwoncasino.com/cn/registration/188159"
 };
 
 let currentLang = 'en';
